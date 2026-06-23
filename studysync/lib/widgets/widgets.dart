@@ -3,11 +3,9 @@ export 'common/custom_button.dart';
 export 'common/custom_text_field.dart';
 export 'common/custom_card.dart';
 export 'common/custom_app_bar.dart';
+export 'common/password_strength_indicator.dart';
+export 'common/terms_checkbox.dart';
 
-// Task widgets (placeholders for now)
-// export 'task/task_card.dart';
-// export 'task/category_filter_chip.dart';
-
-// Dashboard widgets (placeholders for now)
-// export 'dashboard/stats_card.dart';
-// export 'dashboard/upcoming_task_item.dart';
+// Auth screens
+// export 'auth/sign_up_screen.dart';
+// export 'auth/login_screen.dart';
