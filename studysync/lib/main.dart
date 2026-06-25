@@ -7,7 +7,7 @@ void main() async {
   // Initialize Hive database
   await HiveConfig.initHive();
   
-  // Run app with Riverpod
+  // Run app with Riverpod 
   runApp(
     const ProviderScope(
       child: StudySyncApp(),
