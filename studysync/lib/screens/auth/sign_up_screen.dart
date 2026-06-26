@@ -31,7 +31,7 @@ class SignUpScreen extends ConsumerWidget {
       });
     }
 
-    // Navigate on success - ✅ FIXED: Changed from success to successMessage
+    // Navigate on success
     if (signUpState.successMessage != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -157,22 +157,25 @@ class SignUpScreen extends ConsumerWidget {
                 ),
                 AppSpacing.gapVerticalMd,
 
-                // Login link
+                // Login link - ✅ FIXED: Made clickable
                 Center(
-                  child: RichText(
-                    text: TextSpan(
-                      style: const TextStyle(color: Colors.black87),
-                      children: [
-                        const TextSpan(text: 'Already have an account? '),
-                        TextSpan(
-                          text: 'Login',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/login'),
+                    child: RichText(
+                      text: TextSpan(
+                        style: const TextStyle(color: Colors.black87),
+                        children: [
+                          const TextSpan(text: 'Already have an account? '),
+                          TextSpan(
+                            text: 'Login',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
