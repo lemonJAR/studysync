@@ -6,7 +6,6 @@ import 'config/routes.dart';
 import 'providers/providers.dart';
 import 'screens/auth/sign_up_screen.dart';
 
-
 class StudySyncApp extends ConsumerWidget {
   const StudySyncApp({Key? key}) : super(key: key);
 
@@ -20,11 +19,7 @@ class StudySyncApp extends ConsumerWidget {
       theme: AppTheme.getLightTheme(),
       darkTheme: AppTheme.getDarkTheme(),
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      
-      // Home screen - start with sign up
-      home: const SignUpScreen(),
-      
-      // Named route generator
+      home: const SignUpScreen(),  // Start with sign up
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

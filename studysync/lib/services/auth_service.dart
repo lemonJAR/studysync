@@ -9,10 +9,14 @@ class LocalAuthService implements AuthRepository {
 
   Box<dynamic>? _usersBox;
   User? _currentUser;
+  bool _initialized = false;  // ← NEW: Guard against multiple inits
 
-  /// Initialize service
+  /// Initialize service - only runs once
   Future<void> init() async {
+    if (_initialized) return;
+
     try {
+      // Box should already be open from HiveConfig.initHive()
       _usersBox = Hive.box<dynamic>(_usersBoxName);
       
       // Load current user if exists
@@ -20,8 +24,17 @@ class LocalAuthService implements AuthRepository {
       if (userJson != null) {
         _currentUser = User.fromJson(Map<String, dynamic>.from(userJson as Map));
       }
+      
+      _initialized = true;
     } catch (e) {
-      throw Exception('Failed to initialize auth service: $e');
+      // If box doesn't exist, try to open it
+      try {
+        _usersBox = await Hive.openBox<dynamic>(_usersBoxName);
+        _initialized = true;
+      } catch (openError) {
+        print('Failed to initialize auth service: $openError');
+        _initialized = true; // Mark as initialized anyway to prevent infinite retries
+      }
     }
   }
 
@@ -31,19 +44,18 @@ class LocalAuthService implements AuthRepository {
     required String email,
     required String password,
   }) async {
+    await init();  // ← ADDED: Ensure initialized
+
     try {
-      // Validate inputs
       if (name.isEmpty) throw SignUpException('Name cannot be empty');
       if (email.isEmpty) throw SignUpException('Email cannot be empty');
       if (password.isEmpty) throw SignUpException('Password cannot be empty');
 
-      // Check if email already exists
       final existingUser = _findUserByEmail(email);
       if (existingUser != null) {
         throw SignUpException('Email already registered');
       }
 
-      // Create new user
       final newUser = User(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: name,
@@ -51,10 +63,8 @@ class LocalAuthService implements AuthRepository {
         createdAt: DateTime.now(),
       );
 
-      // Save to local storage
       await _usersBox?.put(newUser.id, newUser.toJson());
       
-      // Set as current user
       _currentUser = newUser;
       await _usersBox?.put(_currentUserKeyName, newUser.toJson());
 
@@ -71,18 +81,17 @@ class LocalAuthService implements AuthRepository {
     required String email,
     required String password,
   }) async {
+    await init();  // ← ADDED: Ensure initialized
+
     try {
-      // Validate inputs
       if (email.isEmpty) throw LoginException('Email cannot be empty');
       if (password.isEmpty) throw LoginException('Password cannot be empty');
 
-      // Find user (in real app, validate password)
       final user = _findUserByEmail(email);
       if (user == null) {
         throw InvalidCredentialsException('User not found');
       }
 
-      // Set as current user
       _currentUser = user;
       await _usersBox?.put(_currentUserKeyName, user.toJson());
 
@@ -96,6 +105,8 @@ class LocalAuthService implements AuthRepository {
 
   @override
   Future<void> logout() async {
+    await init();  // ← ADDED: Ensure initialized
+
     try {
       _currentUser = null;
       await _usersBox?.delete(_currentUserKeyName);
@@ -111,6 +122,7 @@ class LocalAuthService implements AuthRepository {
 
   @override
   Future<User?> getCurrentUser() async {
+    await init();  // ← ADDED: Ensure initialized
     return _currentUser;
   }
 

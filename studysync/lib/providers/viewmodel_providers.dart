@@ -5,6 +5,8 @@ import '../viewmodels/auth/login_viewmodel.dart';
 import '../viewmodels/auth/login_state.dart';
 import '../viewmodels/auth/forgot_password_viewmodel.dart';
 import '../viewmodels/auth/forgot_password_state.dart';
+import '../viewmodels/dashboard/dashboard_viewmodel.dart';
+import '../viewmodels/dashboard/dashboard_state.dart';
 import 'service_providers.dart';
 
 /// Sign Up ViewModel Provider
@@ -22,4 +24,9 @@ final loginViewModelProvider = StateNotifierProvider<LoginViewModel, LoginState>
 /// Forgot Password ViewModel Provider
 final forgotPasswordViewModelProvider = StateNotifierProvider<ForgotPasswordViewModel, ForgotPasswordState>((ref) {
   return ForgotPasswordViewModel();
+});
+
+/// Dashboard ViewModel Provider
+final dashboardViewModelProvider = StateNotifierProvider<DashboardViewModel, DashboardState>((ref) {
+  return DashboardViewModel();
 });
