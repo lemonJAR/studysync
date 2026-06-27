@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/task.dart';
 import '../viewmodels/auth/sign_up_viewmodel.dart';
 import '../viewmodels/auth/sign_up_state.dart';
 import '../viewmodels/auth/login_viewmodel.dart';
@@ -10,6 +11,8 @@ import '../viewmodels/dashboard/dashboard_state.dart';
 import 'service_providers.dart';
 import '../viewmodels/task/add_task_viewmodel.dart';
 import '../viewmodels/task/add_task_state.dart';
+import '../viewmodels/task/task_detail_viewmodel.dart';
+import '../viewmodels/task/task_detail_state.dart';
 
 /// Sign Up ViewModel Provider
 final signUpViewModelProvider = StateNotifierProvider<SignUpViewModel, SignUpState>((ref) {
@@ -36,4 +39,12 @@ final dashboardViewModelProvider = StateNotifierProvider<DashboardViewModel, Das
 /// Add Task ViewModel Provider
 final addTaskViewModelProvider = StateNotifierProvider<AddTaskViewModel, AddTaskState>((ref) {
   return AddTaskViewModel();
+});
+
+/// Task Detail ViewModel Provider
+final taskDetailViewModelProvider = StateNotifierProvider.family<
+    TaskDetailViewModel,
+    TaskDetailState,
+    Task>((ref, task) {
+  return TaskDetailViewModel(task);
 });
