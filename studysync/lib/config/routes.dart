@@ -3,6 +3,7 @@ import '../screens/auth/sign_up_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/forgot_password_screen.dart';
 import '../screens/main/dashboard_screen.dart';
+import '../screens/task/add_task_screen.dart';
 
 class AppRoutes {
   static const String signup = '/signup';
@@ -21,6 +22,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case home:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
+      case addTask:
+        return MaterialPageRoute(builder: (_) => const AddTaskScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

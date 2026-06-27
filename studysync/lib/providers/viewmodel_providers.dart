@@ -8,6 +8,8 @@ import '../viewmodels/auth/forgot_password_state.dart';
 import '../viewmodels/dashboard/dashboard_viewmodel.dart';
 import '../viewmodels/dashboard/dashboard_state.dart';
 import 'service_providers.dart';
+import '../viewmodels/task/add_task_viewmodel.dart';
+import '../viewmodels/task/add_task_state.dart';
 
 /// Sign Up ViewModel Provider
 final signUpViewModelProvider = StateNotifierProvider<SignUpViewModel, SignUpState>((ref) {
@@ -29,4 +31,9 @@ final forgotPasswordViewModelProvider = StateNotifierProvider<ForgotPasswordView
 /// Dashboard ViewModel Provider
 final dashboardViewModelProvider = StateNotifierProvider<DashboardViewModel, DashboardState>((ref) {
   return DashboardViewModel();
+});
+
+/// Add Task ViewModel Provider
+final addTaskViewModelProvider = StateNotifierProvider<AddTaskViewModel, AddTaskState>((ref) {
+  return AddTaskViewModel();
 });
