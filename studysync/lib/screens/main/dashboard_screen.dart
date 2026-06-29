@@ -37,6 +37,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         title: 'StudySync',
         actions: [
           IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => Navigator.pushNamed(context, '/search'),
+          ),
+          IconButton(
             icon: const Icon(Icons.settings_outlined),
             onPressed: () {},
           ),

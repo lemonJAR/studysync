@@ -13,6 +13,8 @@ import '../viewmodels/task/add_task_viewmodel.dart';
 import '../viewmodels/task/add_task_state.dart';
 import '../viewmodels/task/task_detail_viewmodel.dart';
 import '../viewmodels/task/task_detail_state.dart';
+import '../viewmodels/search/search_filter_viewmodel.dart';
+import '../viewmodels/search/search_filter_state.dart';
 
 /// Sign Up ViewModel Provider
 final signUpViewModelProvider = StateNotifierProvider<SignUpViewModel, SignUpState>((ref) {
@@ -47,4 +49,13 @@ final taskDetailViewModelProvider = StateNotifierProvider.family<
     TaskDetailState,
     Task>((ref, task) {
   return TaskDetailViewModel(task);
+});
+
+/// Search & Filter ViewModel Provider
+final searchFilterViewModelProvider = StateNotifierProvider<
+    SearchFilterViewModel,
+    SearchFilterState>((ref) {
+  // Get all tasks from dashboard
+  final dashboardState = ref.watch(dashboardViewModelProvider);
+  return SearchFilterViewModel(dashboardState.allTasks);
 });
