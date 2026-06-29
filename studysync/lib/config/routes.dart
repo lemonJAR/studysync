@@ -5,6 +5,7 @@ import '../screens/auth/forgot_password_screen.dart';
 import '../screens/main/dashboard_screen.dart';
 import '../screens/task/add_task_screen.dart';
 import '../screens/task/task_detail_screen.dart';
+import '../screens/search/search_filter_screen.dart';
 import '../models/task.dart';
 
 class AppRoutes {
@@ -13,6 +14,7 @@ class AppRoutes {
   static const String forgotPassword = '/forgotPassword';
   static const String home = '/home';
   static const String addTask = '/addTask';
+  static const String search = '/search';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -26,6 +28,8 @@ class AppRoutes {
       return MaterialPageRoute(builder: (_) => const DashboardScreen());
     case addTask:
       return MaterialPageRoute(builder: (_) => const AddTaskScreen());
+    case search:
+      return MaterialPageRoute(builder: (_) => const SearchFilterScreen());
     case '/taskDetail':
       if (settings.arguments is Task) {
         final task = settings.arguments as Task;
